@@ -3,7 +3,8 @@ import Fade from 'react-reveal/Fade';
 import Movie from './Movie'
 import Pagination from './Pagination'
 
-export default function Movies ({ shows  }) {
+export default function Movies ({ shows, loading  }) {
+  shows = shows ? shows : []
   const [currentPage, setCurrentPage] = useState(1);
   const [ showsPerPage ] = useState(25);
 
@@ -14,9 +15,15 @@ export default function Movies ({ shows  }) {
   // Change page
   const changeCurrentPage = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (shows === undefined || shows.length === 0) {
+  if (loading) {
     return <h1 className="text-center">Loading...</h1>
   }
+
+  if (shows === undefined || shows.length === 0) {
+    return <h1 className="text-center">No result found.</h1>
+  }
+
+  console.log(shows)
 
   return (
     <Fragment>

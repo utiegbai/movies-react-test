@@ -18,16 +18,19 @@ const reducer = (state, action) => {
 export class Provider extends Component {
   state = {
     shows: [],
+    loading: false,
     heading: 'Shows',
     dispatch: action => this.setState(state => reducer(state, action))
   };
 
   componentDidMount () {
     const fetchShows = async () => {
+      this.setState({ loading: true });
+
       const res = await fetch(`${process.env.REACT_APP_API_URL}/shows`);
       const shows = await res.json();
     
-      this.setState({ shows: shows });
+      this.setState({ shows: shows, loading: false });
     }
 
     fetchShows()
